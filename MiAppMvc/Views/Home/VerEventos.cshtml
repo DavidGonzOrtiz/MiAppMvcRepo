@@ -1,0 +1,72 @@
+﻿@model List<MiAppMvc.Models.Eventos>
+
+<style>
+    .evento-card {
+        background-color: rgba(255, 255, 255, 0.1); /* Transparencia */
+        color: #6b79ad;
+        border: 1px solid rgba(107, 121, 173, 0.3);
+    }
+
+    .evento-btn {
+        background-color: #6b79ad;
+        color: white;
+        border: none;
+    }
+
+        .evento-btn:hover {
+            background-color: #5a6894;
+            color: white;
+        }
+
+    .evento-title {
+        color: #6b79ad;
+    }
+
+    .evento-subtext {
+        color: #6b79ad;
+    }
+</style>
+
+<div class="container py-5">
+    @if (TempData["EXITO"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["EXITO"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ERROR"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ERROR"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <h2 class="mb-4 text-center evento-title">Eventos Disponibles</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var evento in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm evento-card">
+                    <div class="card-body">
+                        <h5 class="card-title evento-title">@evento.EventoName</h5>
+                        <p class="card-text evento-subtext">@evento.Description</p>
+                        <ul class="list-unstyled small evento-subtext">
+                            <li><strong>Inicio:</strong> @evento.FechaInicio.ToString("dd/MM/yyyy")</li>
+                            <li><strong>Fin:</strong> @evento.FechaFin.ToString("dd/MM/yyyy")</li>
+                            <li><strong>Empresa:</strong> @evento.Empresa?.Nombre</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 text-center">
+                        <form asp-controller="Usuarios" asp-action="InscripcionEvento" method="post">
+                            <input type="hidden" name="eventoId" value="@evento.EventoId" />
+                            <input type="hidden" name="usuarioId" value="@ViewBag.UsuarioId" />
+                            <button type="submit" class="btn evento-btn w-100">Inscribirse</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

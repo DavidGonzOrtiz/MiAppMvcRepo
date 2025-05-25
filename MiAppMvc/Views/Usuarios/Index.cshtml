@@ -1,0 +1,83 @@
+﻿@model MiAppMvc.ViewModel.EmpresaUsuario
+
+<style>
+    .welcome-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        border: 1px solid rgba(107, 121, 173, 0.3);
+        box-shadow: 0 2px 10px rgba(107, 121, 173, 0.2);
+        color: #6b79ad;
+    }
+
+    .welcome-header {
+        color: #ffffff;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .subtitle {
+        color: #aab0d0;
+        margin-bottom: 1.5rem;
+    }
+
+    .event-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .event-item {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(107, 121, 173, 0.2);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 5px rgba(107, 121, 173, 0.1);
+    }
+
+        .event-item strong {
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+
+        .event-item span {
+            color: #d6d9ef;
+        }
+
+        .event-item small {
+            color: #aab0d0;
+        }
+
+    .no-events {
+        color: #cccccc;
+        font-style: italic;
+        text-align: center;
+        margin-top: 1rem;
+    }
+</style>
+
+<div class="welcome-container">
+    <h2 class="welcome-header text-center">Bienvenido, @Model.NombreUsuario</h2>
+
+    <h4 class="subtitle">Eventos en los que estás inscrito:</h4>
+
+    @if (Model.ListaEventos != null && Model.ListaEventos.Any())
+    {
+        <ul class="event-list">
+            @foreach (var evento in Model.ListaEventos)
+            {
+                <li class="event-item">
+                    <strong>@evento.EventoName</strong><br />
+                    <span>@evento.Description</span><br />
+                    <small>Empresa: @evento.Empresa?.Nombre</small>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="no-events">No estás inscrito en ningún evento.</p>
+    }
+</div>

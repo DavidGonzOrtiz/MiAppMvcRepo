@@ -1,0 +1,119 @@
+﻿@model MiAppMvc.Models.Eventos
+
+@{
+    ViewData["Title"] = "Agregar Evento";
+}
+
+<style>
+    .form-label {
+        color: white;
+        font-weight: 600;
+    }
+
+    .form-control {
+        border: 1px solid rgba(107, 121, 173, 0.5);
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+        .form-control:focus {
+            border-color: #5a6894;
+            box-shadow: 0 0 5px rgba(90, 104, 148, 0.5);
+            background-color: white;
+            color: #3a3f66;
+        }
+
+    .btn-primary {
+        background-color: #6b79ad;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #5a6894;
+        }
+
+    .btn-secondary {
+        background-color: #ccc;
+        border: none;
+        color: #3a3f66;
+    }
+
+        .btn-secondary:hover {
+            background-color: #bbb;
+        }
+
+    .text-danger {
+        font-weight: 600;
+    }
+
+    .container-form {
+        max-width: 600px;
+        margin: 2rem auto;
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        border-radius: 8px;
+        border: 1px solid rgba(107, 121, 173, 0.3);
+        color: #6b79ad;
+        box-shadow: 0 2px 10px rgba(107, 121, 173, 0.2);
+    }
+</style>
+
+<div class="container-form">
+    <h2 class="text-center mb-4">@ViewData["Title"]</h2>
+
+    @if (TempData["EXITO"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["EXITO"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ERROR"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ERROR"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <form asp-action="AgregarEvento" method="post" novalidate>
+        <div class="mb-3">
+            <label asp-for="EventoName" class="form-label"></label>
+            <input asp-for="EventoName" class="form-control" maxlength="10" />
+            <span asp-validation-for="EventoName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="FechaInicio" class="form-label"></label>
+            <input asp-for="FechaInicio" class="form-control" type="date" />
+            <span asp-validation-for="FechaInicio" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="FechaFin" class="form-label"></label>
+            <input asp-for="FechaFin" class="form-control" type="date" />
+            <span asp-validation-for="FechaFin" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <input asp-for="Description" class="form-control" maxlength="30" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Categories" class="form-label"></label>
+            <select asp-for="Categories" class="form-control" asp-items="@(ViewBag.CategoriesList as List<SelectListItem>)">
+                <option value="">Seleccione una categoría</option>
+            </select>
+            <span asp-validation-for="Categories" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
